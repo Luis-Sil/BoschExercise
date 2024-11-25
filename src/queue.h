@@ -39,10 +39,10 @@ public:
      * 
      * @param src The Queue object to copy from.
      */
-    Queue(const Queue &src) : m_filled(src.m_filled), m_data(nullptr), m_capacity(size)
+    Queue(const Queue &src) : m_filled(src.m_filled), m_data(nullptr), m_capacity(src.m_capacity)
     {
-        m_data = static_cast<T *>(operator new(size * sizeof(T)));
-        for (int i = 1; i < m_filled; i++)
+        m_data = static_cast<T *>(operator new(m_capacity * sizeof(T)));
+        for (int i = 0; i < m_filled; i++)
             new (m_data + i) T(*(src.m_data + i));
     }
 

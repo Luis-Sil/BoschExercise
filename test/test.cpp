@@ -8,11 +8,23 @@
 
 using namespace std::chrono;
 
-TEST_CASE("Construct Queue")
+TEST_CASE("Construct Queue (with copy constructor as well.)")
 {
     Queue<int> queue(5);
     REQUIRE(queue.count() == 0);
     REQUIRE(queue.size() == 5);
+    queue.push(2);
+    queue.push(3);
+
+    Queue<int> new_queue(queue);
+    REQUIRE(queue.count() == 2);
+    REQUIRE(queue.size() == 5);
+    
+    std::vector<int> data;
+    for(int i = 0; i < new_queue.count(); i++)
+        data.push_back(*(new_queue.data() + i));
+
+    REQUIRE(data == std::vector<int>{2, 3});
 }
 
 TEST_CASE("Push to Queue: not full")
